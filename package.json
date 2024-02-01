@@ -1,6 +1,6 @@
 {
 	"name": "fluffdb",
-	"version": "1.0.2",
+	"version": "1.1.0",
 	"author": "Alex <limenade.dev@gmail.com>",
 	"homepage": "https://github.com/ItsLimeNade/FluffDB",
 	"main": "./dist/core.js",
@@ -10,7 +10,7 @@
 		"dist"
 	],
 	"scripts": {
-		"compile": "npx tsc && node dist/src/index.js",
+		"compile": "npx tsc && node build/src/index.js",
 		"build": "tsup",
 		"test": "jest"
 	},

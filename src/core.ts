@@ -1,7 +1,6 @@
 import * as fs from 'fs';
 import { readFile, writeFile } from "fs/promises";
 
-//? Fluff is the main class used to manage the database.
 export default class Fluff {
 
     private readonly _path: string
@@ -29,7 +28,11 @@ export default class Fluff {
      * @memberof Fluff
      */
     async read() {
-        return JSON.parse(await readFile(this._path, "utf-8"))
+        try {
+            return JSON.parse(await readFile(this._path, "utf-8"))
+        } catch {
+            return {}
+        }
     }
 
     /**
@@ -98,18 +101,29 @@ export default class Fluff {
         await this._write(fileContent)
     }
 
-/**
- * Will delete the database file
- * @return {*}  {Promise<boolean>}
- * @memberof Fluff
- */
-async deleteFile(): Promise<boolean> {
+    /**
+     * Will delete the database file
+     * @return {*}  {Promise<boolean>}
+     * @memberof Fluff
+     */
+    async deleteFile(): Promise<boolean> {
         try {
             fs.unlinkSync(this._path)
             return true
         } catch (err) {
             console.error(err);
             return false
+        }
+    }
+
+        async concat<T>(key: string, list: Array<T>): Promise<void> {
+        const value = await this.get(key)
+
+        if (Array.isArray(value)) {
+            const updatedValue = value.concat(list)
+            await this.set(key, updatedValue)
+        } else {
+            throw Error(`The database value at index ${key} is not an array.`) 
         }
     }
 }

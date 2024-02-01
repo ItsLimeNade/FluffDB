@@ -38,9 +38,31 @@ test("Gets key in database correctly", async () => {
     await database.deleteFile()
 })
 
-test("Gets key in database correctly", async () => {
+test("Exists key in database", async () => {
     const database = new Fluff("test6_database")
     await database.set("foo", "bar")
     expect(await database.exists("foo")).toBe(true)     
     await database.deleteFile()
 })
+
+test("Concats key in database", async () => {
+    const database = new Fluff("test7_database")
+    await database.set("foo", [1,2,3])
+    await database.concat("foo", [4,5,6])
+    expect(await database.get("foo")).toStrictEqual([1,2,3,4,5,6])     
+    await database.deleteFile()
+})
+
+async function custom() {
+    const database = new Fluff("test8_database")
+    await database.set("foo", [1,2,3])
+    await database.concat("foo", [4,5,6])
+    const val = await database.get("foo")
+
+    await database.set("bob", true)
+    await database.delete("bob")
+
+    if (await database.exists("foo")) {
+        await database.set("exists", val)
+    }
+} 

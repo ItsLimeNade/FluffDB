@@ -24,7 +24,14 @@ const username = await database.get("username") // limenade
 ```
 > Note: You can store any type of data in the databse!  
 > Strings, numbers, objects, array and much more will work!
->
+
+### There are functions to manage objects and arrays : 
+More functions like these will come soon.
+```ts
+await database.set("skillPoints", [1,4,6])
+await database.concat("skillPoints", [6,7,3]) // "skillPoints": [1,4,6,6,7,3]
+```
+
 ### In depth usage : 
 You can use some built-in functions to manage your database the easy way!
 ```ts
@@ -36,6 +43,7 @@ You can use some built-in functions to manage your database the easy way!
 
     await read() // Will return the full content of the database file
 ```
+
 
 ## More features are one their way : 
 - In depth array handling
