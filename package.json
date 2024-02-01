@@ -1,6 +1,6 @@
 {
 	"name": "fluffdb",
-	"version": "1.2.0",
+	"version": "1.2.1",
 	"author": "Alex <limenade.dev@gmail.com>",
 	"homepage": "https://github.com/ItsLimeNade/FluffDB",
 	"keywords": ["database", "db", "json"],

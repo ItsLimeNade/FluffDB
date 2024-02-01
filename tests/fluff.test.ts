@@ -99,17 +99,3 @@ test("Correctly pulls multiple array items", async () => {
     expect(await database.get("foo")).toStrictEqual(["hello", "world"])
     await database.deleteFile()
 })
-
-async function custom() {
-    const database = new Fluff("test8_database")
-    await database.set("foo", [1,2,3])
-    await database.concat("foo", [4,5,6])
-    const val = await database.get("foo")
-
-    await database.set("bob", true)
-    await database.delete("bob")
-
-    if (await database.exists("foo")) {
-        await database.set("exists", val)
-    }
-} 
