@@ -116,14 +116,70 @@ export default class Fluff {
         }
     }
 
-        async concat<T>(key: string, list: Array<T>): Promise<void> {
+    /**
+     * Concats to the value of the item {key} the given array
+     * @template T
+     * @param {string} key
+     * @param {Array<T>} list
+     * @return {*}  {Promise<void>}
+     * @memberof Fluff
+     */
+    async concat<T>(key: string, list: Array<T>): Promise<void> {
         const value = await this.get(key)
+        if (!Array.isArray(value)) throw Error(`The database value at index ${key} is not an array.`) 
 
-        if (Array.isArray(value)) {
-            const updatedValue = value.concat(list)
-            await this.set(key, updatedValue)
-        } else {
-            throw Error(`The database value at index ${key} is not an array.`) 
+        const updatedValue = value.concat(list)
+        await this.set(key, updatedValue)
+    }
+
+    /**
+     * Adds the value of the key with the given number
+     * @param {string} key
+     * @param {number} adder
+     * @return {*}  {Promise<void>}
+     * @memberof Fluff
+     */
+    async add(key: string, adder: number): Promise<void> {
+        const value = await this.get(key)
+        if (typeof value !== 'number') throw Error(`The database value at index ${key} is not a number.`)
+        await this.set(key, value + adder)
+    }
+
+    /**
+     * Substracts the value of the key with the given number
+     * @param {string} key
+     * @param {number} substract
+     * @return {*}  {Promise<void>}
+     * @memberof Fluff
+     */
+    async sub(key: string, substract: number): Promise<void> {
+            const value = await this.get(key)
+            if (typeof value !== 'number') throw Error(`The database value at index ${key} is not a number.`)
+            await this.set(key, value - substract)
+    }
+
+    /**
+     *
+     * @param {string} key
+     * @param {(string | Array<unknown>)} item
+     * @memberof Fluff
+     */
+    async pull(key: string, item: unknown) {
+        let indexValue = await this.get(key)
+        if (!Array.isArray(indexValue)) throw Error(`The database value at index ${key} is not an array.`)
+        
+        if (!Array.isArray(item)) {
+            await this.set(key, indexValue.filter(e => e !== item))
+        }  else {
+            item.forEach((element) => {
+                if (Array.isArray(indexValue)) {
+                    indexValue = indexValue.filter(e => e !== element)
+                }
+            })
+            await this.set(key, indexValue)
         }
     }
-}
+
+    // async push(key: string, value: string | Array<unknown>) {
+    // } 
+}   
