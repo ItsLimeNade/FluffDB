@@ -2,6 +2,7 @@
 	"name": "fluffdb",
 	"version": "1.0.2",
 	"author": "Alex <limenade.dev@gmail.com>",
+	"homepage": "https://github.com/ItsLimeNade/FluffDB",
 	"main": "./dist/core.js",
 	"module": "./dist/core.mjs",
 	"types": "./dist/core.d.ts",
